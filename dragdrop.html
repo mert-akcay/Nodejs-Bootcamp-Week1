@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag-Drop Event</title>
+    <style>
+        .container {
+            text-align: center;
+            padding-top: 20vh;
+        }
+        .dropzone {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #cccccc;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        #drag {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background-color: orangered;
+        }
+        .drag-over {
+            border: dashed 3px orangered!important;
+        }
+    </style>
+    <script>
+
+        // This function being called when ondragstart event. This event occurs when user started to drag an element.
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        // This function being called when ondrop event. This event occurs when dragged element is dropped a dropzone.
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.classList.remove("drag-over");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+        // This function being called when ondragover event. This event occurs when dragged element is over the dropzone.
+        function dragOver(ev) {
+            ev.preventDefault();
+            ev.target.classList.add("drag-over");
+        }
+        
+        // This function being called when ondragleave event. This event occurs when dragged element leaves from dropzone.
+        function dragLeave(ev) {
+            ev.preventDefault();
+            ev.target.classList.remove("drag-over");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Drag and Drop</h1>
+        <div class="dropzone" id="div1" ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)">
+            <div id="drag" ondragstart="drag(event)" draggable="true"></div>
+        </div>
+        <div class="dropzone" id="div2" ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"></div>
+        <div class="dropzone" id="div3" ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"></div>
+    </div>
+</body>
+</html>
